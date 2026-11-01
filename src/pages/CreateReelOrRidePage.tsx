@@ -146,7 +146,7 @@ const ReelStudio = () => {
       return
     }
     if (lockedWatermark) {
-      openPaywall('Removing the Kixup watermark is a PRO export option.')
+      openPaywall('Removing the MotoSync watermark is a PRO export option.')
       return
     }
     setExporting(true)
@@ -446,11 +446,11 @@ const ReelStudio = () => {
 
           <div className="mt-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3">
             <Toggle
-              label="Kixup watermark"
+              label="MotoSync watermark"
               description={
                 isPro
                   ? 'Turn this off for clean 4K exports.'
-                  : 'Free exports include a Kixup watermark.'
+                  : 'Free exports include a MotoSync watermark.'
               }
               checked={watermark}
               onChange={(value) => {

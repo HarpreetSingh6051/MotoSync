@@ -101,7 +101,7 @@ export const FeedPage = () => {
     if (value === 'near' && !nearFlag.available) {
       pushToast(
         'Near-me radar is paused',
-        'The Kixup team turned off device radius for this rollout. Showing all rides.',
+        'The MotoSync team turned off device radius for this rollout. Showing all rides.',
         'warn',
       )
       return

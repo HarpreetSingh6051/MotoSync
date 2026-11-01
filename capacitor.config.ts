@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
-  appId: 'com.kixup.app',
-  appName: 'Kixup',
+  appId: 'com.motosync.app',
+  appName: 'MotoSync',
   webDir: 'dist',
   bundledWebRuntime: false,
   backgroundColor: '#07070C',

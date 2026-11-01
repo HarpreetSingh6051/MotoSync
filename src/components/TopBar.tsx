@@ -108,7 +108,7 @@ export const TopBar = ({ active }: { active: RouteName }) => {
             type="button"
             onClick={() => navigate('/feed')}
             className="shrink-0 rounded-xl transition hover:opacity-85"
-            aria-label="Kixup home"
+            aria-label="MotoSync home"
           >
             <Logo />
           </button>

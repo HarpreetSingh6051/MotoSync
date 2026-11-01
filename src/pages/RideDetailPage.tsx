@@ -133,7 +133,7 @@ export const RideDetailPage = ({ rideId }: { rideId: string }) => {
   const familyUrl = liveShareUrl(ride.id, true)
 
   const share = async () => {
-    const text = `${ride.title} — ${ride.routeSummary}. ${goingCount}/${ride.maxRiders} riders in. Join the pack on Kixup: ${shareUrl}`
+    const text = `${ride.title} — ${ride.routeSummary}. ${goingCount}/${ride.maxRiders} riders in. Join the pack on MotoSync: ${shareUrl}`
     if (navigator.share) {
       try {
         await navigator.share({ title: ride.title, text, url: shareUrl })
@@ -160,20 +160,20 @@ export const RideDetailPage = ({ rideId }: { rideId: string }) => {
 
   const downloadGpx = () => {
     if (!gpxFlag.enabled) {
-      pushToast('GPX downloads paused', 'The Kixup team has paused offline downloads for now.', 'warn')
+      pushToast('GPX downloads paused', 'The MotoSync team has paused offline downloads for now.', 'warn')
       return
     }
     if (!gpxFlag.available) {
       openPaywall('Offline mountain GPX downloads are part of Road Captain PRO.')
       return
     }
-    downloadFile(`${ride.id}-kixup.gpx`, buildGpx(ride))
+    downloadFile(`${ride.id}-motosync.gpx`, buildGpx(ride))
     pushToast('GPX saved', `${ride.distanceKm} km route is ready for offline navigation.`, 'success')
   }
 
   const copyFamilyLink = async () => {
     if (!familyFlag.enabled) {
-      pushToast('Family tracking paused', 'The Kixup team has paused family links for now.', 'warn')
+      pushToast('Family tracking paused', 'The MotoSync team has paused family links for now.', 'warn')
       return
     }
     if (!familyFlag.available) {

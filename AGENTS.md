@@ -1,4 +1,4 @@
-# AGENTS.md — working notes for Ride & Roam (PackPulse)
+# AGENTS.md — working notes for MotoSync (Pack Connected. Ride in Sync)
 
 Read `CLAUDE.md` for the product blueprint and `README.md` for setup/deployment.
 This file is the short version for anyone (human or agent) changing the code.

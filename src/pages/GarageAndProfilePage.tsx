@@ -94,7 +94,7 @@ export const GarageAndProfilePage = () => {
 
   const shareProfile = async () => {
     const ok = await copyToClipboard(`${window.location.origin}/#/garage`)
-    pushToast(ok ? 'Profile link copied' : 'Copy failed', `@${me.handle} · Kixup`, ok ? 'success' : 'warn')
+    pushToast(ok ? 'Profile link copied' : 'Copy failed', `@${me.handle} · MotoSync`, ok ? 'success' : 'warn')
   }
 
   return (
@@ -1066,7 +1066,7 @@ const StartupSoundCard = () => {
     const sound = active.find((item) => item.id === id)
     if (!sound) return
     if (sound.isProOnly && !isPro) {
-      openPaywall(`${sound.brand} startup notes are part of Kixup PRO.`)
+      openPaywall(`${sound.brand} startup notes are part of MotoSync PRO.`)
       return
     }
     setStartupSound(sound.id)
@@ -1081,7 +1081,7 @@ const StartupSoundCard = () => {
   const preview = () => {
     if (!selected) return
     if (selected.isProOnly && !isPro) {
-      openPaywall(`${selected.brand} startup notes are part of Kixup PRO.`)
+      openPaywall(`${selected.brand} startup notes are part of MotoSync PRO.`)
       return
     }
     if (muted) {
@@ -1113,7 +1113,7 @@ const StartupSoundCard = () => {
           description={
             splashFlag.available
               ? 'Show the startup sequence on the next launch.'
-              : 'Paused by the Kixup team for this rollout.'
+              : 'Paused by the MotoSync team for this rollout.'
           }
           checked={splashEnabled && splashFlag.available}
           onChange={setSplashEnabled}
@@ -1426,7 +1426,7 @@ const FounderTab = ({
                 window.localStorage.removeItem('kixup.state.v1')
                 window.localStorage.removeItem('kixup.config.v1')
                 window.sessionStorage.removeItem('kixup.splash.seen')
-                pushToast('Demo state reset', 'Reloading with the seeded Kixup dataset…', 'default')
+                pushToast('Demo state reset', 'Reloading with the seeded MotoSync dataset…', 'default')
                 window.setTimeout(() => window.location.reload(), 700)
               }}
             >

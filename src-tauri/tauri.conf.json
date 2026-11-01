@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Ride & Roam",
+  "productName": "MotoSync",
   "version": "1.0.0",
-  "identifier": "app.packpulse.rideandrom",
+  "identifier": "com.motosync.app",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:5173",
@@ -13,7 +13,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "Ride & Roam — Find your pack",
+        "title": "MotoSync — Pack Connected. Ride in Sync.",
         "width": 1280,
         "height": 860,
         "minWidth": 380,
@@ -34,7 +34,7 @@
     "targets": "all",
     "category": "SocialNetworking",
     "shortDescription": "Motorcycle social network, live pack radar and AI ride studio.",
-    "longDescription": "Ride & Roam (PackPulse) helps riders find their pack, run club rides with live formation radar, split the tank with AI receipt scanning and cut ride reels.",
+    "longDescription": "MotoSync helps riders find their pack, run club rides with live formation radar, split the tank with AI receipt scanning and cut ride reels.",
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",

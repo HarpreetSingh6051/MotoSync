@@ -1,6 +1,6 @@
-# Kixup Rider App
+# MotoSync Rider App
 
-The React 19 + TypeScript + Vite + Tailwind mobile and web application for Kixup (formerly Ride & Roam / PackPulse).
+The React 19 + TypeScript + Vite + Tailwind mobile and web application for MotoSync (Pack Connected. Ride in Sync).
 
 ## Features
 - **Live Pack Radar & Map**: Real-time GPS radar tracking for Sunday rides, fall-behind alerts, and SOS beacons.

@@ -1,4 +1,4 @@
-package com.kixup.app;
+package com.motosync.app;
 
 import com.getcapacitor.BridgeActivity;
 

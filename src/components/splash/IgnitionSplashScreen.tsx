@@ -83,7 +83,7 @@ export const IgnitionSplashScreen = ({
       transition={{ duration: 0.3 }}
       role="dialog"
       aria-modal="true"
-      aria-label="Kixup ignition"
+      aria-label="MotoSync ignition"
       className="fixed inset-0 z-[120] overflow-y-auto bg-ink-950"
     >
       <div className="pointer-events-none absolute inset-0">
@@ -108,7 +108,7 @@ export const IgnitionSplashScreen = ({
               <Flame className="h-4 w-4 text-amber-300" />
             </span>
             <span className="text-[10px] font-bold uppercase tracking-[0.26em] text-white/45">
-              Kixup ignition
+              MotoSync ignition
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -296,7 +296,7 @@ export const IgnitionSplashScreen = ({
           >
             {phase === 'ready' ? (
               <>
-                Enter Kixup <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+                Enter MotoSync <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
               </>
             ) : phase === 'starting' ? (
               <>

@@ -158,7 +158,7 @@ export const PackChatPage = ({ channelId }: { channelId?: string }) => {
 
   const toggleIntercom = () => {
     if (!intercomFlag.enabled) {
-      pushToast('Intercom bridge paused', 'The Kixup team has turned off helmet intercom for now.', 'warn')
+      pushToast('Intercom bridge paused', 'The MotoSync team has turned off helmet intercom for now.', 'warn')
       return
     }
     if (!intercomFlag.available) {

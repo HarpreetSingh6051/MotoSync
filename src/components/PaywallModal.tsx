@@ -92,7 +92,7 @@ export const PaywallModal = () => {
         subtitle="The Super Admin has paused every rider plan."
       >
         <p className="pb-4 text-xs leading-relaxed text-white/50">
-          Ask the Kixup team to activate a plan in the Super Admin ERP, then try again.
+          Ask the MotoSync team to activate a plan in the Super Admin ERP, then try again.
         </p>
       </Modal>
     )
@@ -103,7 +103,7 @@ export const PaywallModal = () => {
       open={Boolean(paywall?.open)}
       onClose={closePaywall}
       size="md"
-      title={isPro ? 'Your Golden Helmet is active' : 'Kixup PRO'}
+      title={isPro ? 'Your Golden Helmet is active' : 'MotoSync PRO'}
       subtitle={
         isPro
           ? `${currentPlan?.name ?? 'Road Captain PRO'} · every pack tool is unlocked on this device.`
@@ -118,10 +118,10 @@ export const PaywallModal = () => {
           </span>
           <div>
             <p className="font-display text-lg font-semibold tracking-tight text-white">
-              {isPro ? 'Ride like a captain, not a passenger.' : 'Kickstands up. Pack connected.'}
+              {isPro ? 'Ride like a captain, not a passenger.' : 'Pack connected. Ride in sync.'}
             </p>
             <p className="mt-1 text-xs leading-relaxed text-white/55">
-              12,400+ riders run Sunday packs on Kixup. PRO pays for itself in one tank
+              12,400+ riders run Sunday packs on MotoSync. PRO pays for itself in one tank
               split.
             </p>
           </div>

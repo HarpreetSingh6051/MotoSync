@@ -26,7 +26,7 @@ export const RideCard = ({ ride }: { ride: Ride }) => {
   const shareUrl = rideShareUrl(ride.id)
 
   const share = async () => {
-    const text = `${ride.title} — ${ride.routeSummary}. ${goingCount}/${ride.maxRiders} riders in. Join the pack on Kixup: ${shareUrl}`
+    const text = `${ride.title} — ${ride.routeSummary}. ${goingCount}/${ride.maxRiders} riders in. Join the pack on MotoSync: ${shareUrl}`
     if (navigator.share && /Mobi|Android|iPhone/i.test(navigator.userAgent)) {
       try {
         await navigator.share({ title: ride.title, text, url: shareUrl })

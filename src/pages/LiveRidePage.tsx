@@ -556,7 +556,7 @@ export const LiveRidePage = ({
                     icon={<Siren className="h-3.5 w-3.5" />}
                     onClick={() => {
                       if (!sosFlag.available) {
-                        openPaywall('The biker SOS beacon is part of Kixup PRO.')
+                        openPaywall('The biker SOS beacon is part of MotoSync PRO.')
                         return
                       }
                       sendPing('HAZARD')

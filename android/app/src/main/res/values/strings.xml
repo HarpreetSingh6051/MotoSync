@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Kixup</string>
-    <string name="title_activity_main">Kixup</string>
-    <string name="package_name">com.kixup.app</string>
-    <string name="custom_url_scheme">com.kixup.app</string>
+    <string name="app_name">MotoSync</string>
+    <string name="title_activity_main">MotoSync</string>
+    <string name="package_name">com.motosync.app</string>
+    <string name="custom_url_scheme">com.motosync.app</string>
 </resources>
