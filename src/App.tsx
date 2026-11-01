@@ -97,7 +97,7 @@ export const App = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
-    document.title = `${titles[route.name] ?? 'Kixup'} · Kixup`
+    document.title = `${titles[route.name] ?? 'MotoSync'} · MotoSync`
   }, [route.name, route.rideId, route.channelId])
 
   return (
@@ -118,7 +118,7 @@ export const App = () => {
                 {accountStatus === 'banned' ? 'Account banned' : 'Account suspended'}
               </p>
               <p className="mt-0.5 text-[11px] leading-relaxed text-white/45">
-                A Kixup super admin has paused this rider account. Writes and live
+                A MotoSync super admin has paused this rider account. Writes and live
                 broadcasts are disabled until it is restored.
               </p>
             </div>
@@ -174,10 +174,10 @@ export const App = () => {
         <div className="flex flex-col gap-3 border-t border-white/[0.06] py-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-3 text-[10px] text-white/25">
             <span className="font-display text-xs font-black tracking-[0.08em] text-white/50">
-              KIX<span className="text-amber-300/70">UP</span>
+              MOTO<span className="text-amber-300/70">SYNC</span>
             </span>
             <span className="hidden h-3 w-px bg-white/10 sm:block" />
-            <span>© {new Date().getFullYear()} Kixup</span>
+            <span>© {new Date().getFullYear()} MotoSync</span>
             <a href="#/clubs" className="transition hover:text-white/45">
               Clubs
             </a>
@@ -234,7 +234,7 @@ export const App = () => {
             onUpgrade={() => {
               closeSplash()
               openPaywall(
-                'Unlock the Ducati, Ninja and Triumph startup notes with Kixup PRO.',
+                'Unlock the Ducati, Ninja and Triumph startup notes with MotoSync PRO.',
               )
             }}
           />

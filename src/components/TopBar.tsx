@@ -165,7 +165,7 @@ export const TopBar = ({ active }: { active: RouteName }) => {
           {showAdmin ? (
             <IconButton
               label="Super Admin ERP"
-              onClick={() => navigate('/admin')}
+              onClick={() => window.open(import.meta.env.VITE_ADMIN_URL || 'https://moto-sync-admin.vercel.app', '_blank')}
               className="hidden h-9 w-9 sm:inline-flex"
             >
               <Shield className="h-4 w-4" />
