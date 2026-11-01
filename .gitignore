@@ -35,3 +35,6 @@ src-tauri/gen
 # Capacitor
 android/app/build
 ios/App/build
+
+.vercel
+.env*
