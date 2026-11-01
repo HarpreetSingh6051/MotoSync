@@ -9,6 +9,7 @@ import {
   MessageCircle,
   Plus,
   Search,
+  Share2,
   ShieldCheck,
   UserPlus,
   Users,
@@ -29,7 +30,7 @@ import { useClubs } from '@/lib/data'
 import { channels, currentUserId, profileMap } from '@/lib/mockData'
 import { useAppStore } from '@/store/useAppStore'
 import { navigate } from '@/lib/router'
-import { cx, uid } from '@/lib/format'
+import { cx, copyToClipboard, uid } from '@/lib/format'
 
 const styles = [
   'All styles',
@@ -296,6 +297,17 @@ export const ClubsDirectoryPage = () => {
                           <Button
                             size="xs"
                             variant="secondary"
+                            onClick={() => {
+                              copyToClipboard(`https://moto-sync-ochre.vercel.app/#/clubs?invite=${club.handle}`)
+                              pushToast('Invite Link Copied', `Share link to invite riders to ${club.name}.`, 'success')
+                            }}
+                            icon={<Share2 className="h-3 w-3" />}
+                          >
+                            Invite
+                          </Button>
+                          <Button
+                            size="xs"
+                            variant="secondary"
                             onClick={() => openLounge(club)}
                             icon={<MessageCircle className="h-3 w-3" />}
                           >
@@ -352,6 +364,16 @@ export const ClubsDirectoryPage = () => {
           addLocalClub(club)
           toggleJoinClub(club.id)
           setCreateOpen(false)
+
+          try {
+            const apiBase = (import.meta.env.VITE_API_BASE_URL || 'https://moto-sync-be.vercel.app/api/v1').replace(/\/$/, '')
+            fetch(`${apiBase}/clubs`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(club),
+            }).catch(() => {})
+          } catch {}
+
           pushToast('Club launched', `${club.name} is live. Invite your pack from the club lounge.`, 'success')
         }}
       />

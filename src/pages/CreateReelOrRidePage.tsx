@@ -670,6 +670,17 @@ const HostRideForm = () => {
     }
     addLocalRide(ride)
     setCreatedId(id)
+
+    // Sync to backend API so all riders and admin dashboard see it immediately
+    try {
+      const apiBase = (import.meta.env.VITE_API_BASE_URL || 'https://moto-sync-be.vercel.app/api/v1').replace(/\/$/, '')
+      fetch(`${apiBase}/rides`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(ride),
+      }).catch(() => {})
+    } catch {}
+
     pushToast('Ride published', 'Your pack can RSVP now. Share the invite link.', 'success')
   }
 

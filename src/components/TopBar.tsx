@@ -6,12 +6,15 @@ import {
   MapPin,
   Search,
   Shield,
+  Smartphone,
   Sparkles,
+  User,
   Users,
   X,
 } from 'lucide-react'
 import { Avatar, IconButton, Logo, Modal, Pill } from '@/components/ui'
 import { GoldenHelmetBadge } from '@/components/brand/GoldenHelmetBadge'
+import { AuthModal } from '@/components/AuthModal'
 import { profileMap, currentUserId } from '@/lib/mockData'
 import { useClubs, useRides } from '@/lib/data'
 import { useAppStore } from '@/store/useAppStore'
@@ -63,6 +66,7 @@ export const TopBar = ({ active }: { active: RouteName }) => {
   const me = profileMap[currentUserId]
 
   const [searchOpen, setSearchOpen] = useState(false)
+  const [authOpen, setAuthOpen] = useState(false)
   const [notificationsOpen, setNotificationsOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [unread, setUnread] = useState(notifications.filter((n) => n.unread).length)
@@ -161,6 +165,25 @@ export const TopBar = ({ active }: { active: RouteName }) => {
             )}
             <span className="hidden sm:inline">{isPro ? 'PRO' : 'Go PRO'}</span>
           </button>
+
+          <button
+            type="button"
+            onClick={() => setAuthOpen(true)}
+            className="flex h-9 items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.06] px-2.5 text-[11px] font-semibold text-white/80 transition hover:border-amber-400/40 hover:text-white"
+          >
+            <User className="h-3.5 w-3.5 text-amber-400" />
+            <span className="hidden sm:inline">Register</span>
+          </button>
+
+          <a
+            href="/motosync.apk"
+            download="motosync.apk"
+            className="flex h-9 items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 text-[11px] font-semibold text-emerald-400 transition hover:border-emerald-400/50 hover:bg-emerald-500/20"
+            title="Download MotoSync Android APK"
+          >
+            <Smartphone className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Get APK</span>
+          </a>
 
           {showAdmin ? (
             <IconButton
@@ -386,6 +409,8 @@ export const TopBar = ({ active }: { active: RouteName }) => {
           ) : null}
         </div>
       </Modal>
+
+      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </>
   )
 }

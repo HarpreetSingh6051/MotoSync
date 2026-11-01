@@ -88,11 +88,25 @@ export const mapClubRow = (row: DbRow): Club => ({
   founded: '2024',
 })
 
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'https://moto-sync-be.vercel.app/api/v1').replace(/\/$/, '')
+
 /* ------------------------------------------------------------------ *
  * Fetchers — each falls back to the seeded dataset on any failure.
  * ------------------------------------------------------------------ */
 
 const fetchRides = async (): Promise<Ride[]> => {
+  try {
+    const res = await fetch(`${API_BASE}/rides`)
+    if (res.ok) {
+      const data = await res.json()
+      if (Array.isArray(data) && data.length > 0) {
+        return (data as DbRow[]).map(mapRideRow)
+      }
+    }
+  } catch {
+    /* fallback to Supabase */
+  }
+
   if (supabase) {
     try {
       const { data, error } = await supabase
@@ -111,6 +125,18 @@ const fetchRides = async (): Promise<Ride[]> => {
 }
 
 const fetchClubs = async (): Promise<Club[]> => {
+  try {
+    const res = await fetch(`${API_BASE}/clubs`)
+    if (res.ok) {
+      const data = await res.json()
+      if (Array.isArray(data) && data.length > 0) {
+        return (data as DbRow[]).map(mapClubRow)
+      }
+    }
+  } catch {
+    /* fallback to Supabase */
+  }
+
   if (supabase) {
     try {
       const { data, error } = await supabase
