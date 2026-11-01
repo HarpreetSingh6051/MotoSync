@@ -1,0 +1,25 @@
+{
+  "name": "Kixup — Kickstands up. Pack connected.",
+  "short_name": "Kixup",
+  "description": "Find your pack, run the Sunday route, split the tank and cut AI ride reels.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#07070C",
+  "theme_color": "#07070C",
+  "categories": ["social", "travel", "sports"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    { "name": "Live pack radar", "url": "/#/feed" },
+    { "name": "Host a ride", "url": "/#/create" },
+    { "name": "My garage", "url": "/#/garage" }
+  ]
+}
