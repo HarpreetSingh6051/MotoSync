@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Expo & Metro
+.expo/
+web-build/
+expo-env.d.ts
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -24,17 +29,7 @@ dist-ssr
 *.sw?
 
 # Environment
-.env
-.env.local
-.env.production
-
-# Tauri
-src-tauri/target
-src-tauri/gen
-
-# Capacitor
-android/app/build
-ios/App/build
+.env*
+!.env.example
 
 .vercel
-.env*

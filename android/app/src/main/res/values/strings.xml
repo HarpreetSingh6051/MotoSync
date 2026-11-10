@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">MotoSync</string>
-    <string name="title_activity_main">MotoSync</string>
-    <string name="package_name">com.motosync.app</string>
-    <string name="custom_url_scheme">com.motosync.app</string>
-</resources>

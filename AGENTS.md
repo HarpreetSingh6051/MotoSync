@@ -1,99 +1,36 @@
-# AGENTS.md — working notes for MotoSync (Pack Connected. Ride in Sync)
+# MotoSync Platform — Global Architecture & Operating Rules
 
-Read `CLAUDE.md` for the product blueprint and `README.md` for setup/deployment.
-This file is the short version for anyone (human or agent) changing the code.
+You are the lead engineer and product designer for MotoSync, a motorcycle riding-pack platform made of 4 repos:
+1. `kixup-backend` (NestJS)
+2. `kixup-rider-app` (Expo / React Native)
+3. `kixup-admin-erp` (React + Vite)
+4. `motosync-landing` (Next.js)
 
-## Commands
+They share one Supabase project.
 
-```bash
-npm install
-npm run dev        # Vite, port 5173
-npm run typecheck  # tsc --noEmit — must stay clean
-npm run build      # typecheck + production build
-```
+PRODUCT PROMISE: Riders plan a ride, the pack gets notified, everyone meets and sees each other live, splits the bill, discovers other packs, chats, and enjoys ride sounds. Everything must be simple, fast and delightful.
 
-There is no test runner yet. Verify changes with `npm run typecheck`, `npm run build`,
-and a manual pass through `#/feed` → `#/ride/r_sunrise` → `#/ride/r_sunrise/live` →
-`#/clubs` → `#/chat` → `#/create` → `#/garage`.
+## WORKING RULES
+1. Work in small vertical slices. Finish one slice end to end (UI + data + states) before starting another.
+2. Never invent features, numbers or metrics. Anything not backed by real data must be labeled "Demo" in the UI and in code.
+3. Never put the Supabase service_role key in any frontend. All privileged writes go through the backend.
+4. Use design tokens only. No raw hex colors, no hard-coded pixel widths outside token files.
+5. Every screen needs: loading (skeleton), empty, error (with retry) and success states.
+6. Max one primary action per screen. Max 2 lines of body text per card. No paragraphs in the UI.
+7. Respect reduced motion. Never autoplay audio.
+8. All files UTF-8. No mojibake characters.
+9. After each task: run typecheck + build, test in the browser or emulator, take screenshots at 360, 390 and 430 px widths, and fix problems before reporting.
+10. Finish each phase with a checklist: Done / Partially done (why) / Not done (why). Then STOP and wait for approval.
+11. Do not touch files outside the current phase. Do not delete or rewrite working code unless the phase says so.
+12. Be honest. If something does not work, say so.
 
-## Stack reality check
+---
 
-React 19 · Vite 8 · TypeScript 7 · Tailwind 3.4 · TanStack Query 5 · Zustand 5 ·
-Supabase JS 2 · framer-motion 14 · lucide-react.
+## REPO ARCHITECTURE OVERVIEW
 
-- TypeScript 7 **does not allow `baseUrl`**. The `@/*` alias comes from `paths` with
-  relative targets in `tsconfig.json` plus the Vite `resolve.alias` in `vite.config.ts`.
-- Style: no semicolons, single quotes, arrow-function components, `cx()` from
-  `src/lib/format.ts` for conditional classes.
-- Icons: `lucide-react` only. No icon fonts or raster UI assets (Tauri app icons are the
-  only committed PNGs).
-
-## Architecture rules
-
-1. **Demo mode is sacred.** `src/lib/data.ts` must always fall back to `mockData.ts`
-   when Supabase is missing or errors. Never add a code path that requires keys to render.
-2. **One design system.** Compose from `src/components/ui.tsx` (Button, Modal, Sheet,
-   Avatar, Segmented, Badge, Field, EmptyState, Stat…). Don't fork button styles.
-3. **The live map lives inside a ride.** Do not add it to the bottom dock or a top-level
-   route. Entry is `#/ride/:id/live` only.
-4. **Hash routing.** Add routes in `src/lib/router.tsx` (`parse`, `RouteName`) and render
-   them in `src/App.tsx`. `navigate()` / `ridePath()` / `liveRidePath()` are the helpers.
-   New secondary pages should be `React.lazy`-loaded like the existing ones.
-5. **State split.** Server-shaped data goes through TanStack Query hooks in `lib/data.ts`.
-   Client/session state (PRO, joins, likes, flags, toasts, paywall) lives in
-   `src/store/useAppStore.ts` and is persisted — be careful with migrations of that shape.
-6. **PRO gating** is checked with `useAppStore().isPro` and opened via `openPaywall()`.
-   Any new gated feature should still show a usable preview in demo mode.
-7. **Offline-safe media.** Artwork is generated SVG (`RideArtwork.tsx`), exhaust audio is
-   synthesized (`exhaustAudio.ts`). Prefer this over remote URLs in demo flows.
-
-## Gotchas
-
-- `useLiveRide` needs a **memoized** participant array from the caller (see `FeedPage`,
-  `LiveRidePage`). Passing a fresh array each render resets simulation state in a loop.
-- `AnimatePresence mode="wait"` keys pages by route + id; keep keys stable.
-- The app intentionally renders without `VITE_*` keys. Don't add startup throws.
-- `src-tauri/target` and `src-tauri/gen` are gitignored; icons in `src-tauri/icons`
-  are committed.
-- `.env` is gitignored and may contain local keys — never overwrite it.
-
-## Supabase
-
-Run migrations in this exact order (RLS depends on helper functions):
-
-```text
-001_initial_schema.sql
-002_functions_triggers.sql   # is_club_member, can_view_ride, RPCs, triggers
-003_rls_policies.sql         # policies + execute grants
-004_storage.sql              # buckets + storage.objects policies
-```
-
-- `SECURITY DEFINER` helpers in `002` intentionally bypass RLS to avoid recursive
-  policy lookups. If you add a policy, reuse them instead of joining membership tables.
-- `ride_share_snapshot(uuid)` is granted to `anon` by design (UUID token = capability,
-  payload excludes PII). Don't widen other RPC grants without thinking about it.
-- Storage object paths must start with the owner's uuid: `{bucket}/{user_id}/…`.
-- New realtime tables need `alter publication supabase_realtime add table …` and,
-  for filtered updates, `replica identity full`.
-
-## Where things live
-
-| Need | File |
-| --- | --- |
-| Domain types | `src/types.ts` |
-| Seed world | `src/lib/mockData.ts` |
-| Query hooks / row mappers | `src/lib/data.ts` |
-| Gemini prompts + fallbacks | `src/lib/gemini.ts` |
-| Live simulation | `src/hooks/useLiveRide.ts` |
-| Radar rendering | `src/components/LiveRadarMap.tsx` |
-| Design primitives | `src/components/ui.tsx` |
-| Paywall + pricing | `src/components/PaywallModal.tsx` |
-| Entitlements/flags | `src/store/useAppStore.ts` |
-
-## Definition of done
-
-- `npm run typecheck` and `npm run build` pass.
-- Demo mode still works with an empty `.env`.
-- Mobile layout (375 px) and desktop (1280 px) both hold up; touch targets ≥ 44 px.
-- New copy matches the voice: terse, rider-native, no corporate filler.
-- Update `README.md` when you add a route, env var, script or platform step.
+| Repo | Stack | Primary Role |
+| :--- | :--- | :--- |
+| `kixup-backend` | NestJS 10, TypeScript, Supabase Admin | Central API write gateway, JWT verification, audit logging, DTO validation |
+| `kixup-rider-app` | Expo SDK 58, React Native 0.88, React 19, Reanimated 4 | Native iOS/Android & PWA mobile client for riders |
+| `kixup-admin-erp` | React 19, Vite 8, Tailwind CSS, TanStack Query | Backoffice control center for plans, flags, clubs, and audit ledger |
+| `motosync-landing` | Next.js 14, Tailwind CSS, Framer Motion | Public scroll-driven showcase & APK distribution portal |
