@@ -18,8 +18,8 @@
     }
   ],
   "shortcuts": [
-    { "name": "Live pack radar", "url": "/#/feed" },
-    { "name": "Host a ride", "url": "/#/create" },
-    { "name": "My garage", "url": "/#/garage" }
+    { "name": "Pack Radar", "url": "/pack" },
+    { "name": "Splits", "url": "/splits" },
+    { "name": "Discover Packs", "url": "/discover" }
   ]
 }

@@ -1,28 +1,46 @@
-# MotoSync Rider App
+# MotoSync Rider Mobile App
 
-The React 19 + TypeScript + Vite + Tailwind mobile and web application for MotoSync (Pack Connected. Ride in Sync).
+Official mobile application for MotoSync (**Pack Connected. Ride in Sync**). Built natively with Expo SDK 58, React Native 0.88, React 19, and Expo Router.
 
-## Features
-- **Live Pack Radar & Map**: Real-time GPS radar tracking for Sunday rides, fall-behind alerts, and SOS beacons.
-- **Digital Garage**: Exhaust sound vault (Harley V-Twin, Bullet thump, Ninja inline-4, Ducati V4, Triumph triple) and AI receipt OCR tank splits.
-- **Clubs & Pack Chat**: Club lounges, multi-club hosting, and voice intercom bridging.
-- **AI Reel Studio**: 4K / 1080p AI ride reel cuts with telemetry overlays and instant share links (`/r/:id` and `/live/:id`).
-- **Road Captain PRO**: Golden Helmet PRO badges, paywall modal, and dynamic feature flags synced live with Supabase.
+## Tech Stack & Architecture
+- **Framework**: Expo SDK 58 (React Native 0.88 + React 19 + TypeScript)
+- **Routing**: Expo Router (typed file-based routes in `app/(tabs)`)
+- **Animation & Physics**: `react-native-reanimated` 4 + `react-native-gesture-handler`
+- **Audio Engine**: `expo-audio` with procedural CC0 ambient motorcycle hum and exhaust synthesizer
+- **Design System**: True black (`#000000`), electric blue (`#10B1FB`), neon violet (`#8B5CF6`), Space Grotesk + Inter
+- **Data Layer**: TanStack Query 5 + Supabase Client with graceful offline mock fallback
 
-## Setup & Development
+## Local Development
 
 ```bash
+# 1. Install dependencies
 npm install
-npm run dev        # Vite dev server on port 5173
-npm run typecheck  # TypeScript check
-npm run build      # Typecheck + production build
+
+# 2. Start local Expo development server (port 8081)
+npx expo start
+
+# Platform specific:
+npm run web      # Web preview in browser
+npm run android  # Android emulator / connected device
+npm run ios      # iOS simulator
 ```
 
-## Production Deployment (Vercel / Netlify / Cloudflare)
-1. Fork or push this repository to GitHub.
-2. Link the repository to your hosting provider (Vercel / Netlify).
-3. Set the environment variables in your hosting dashboard:
-   - `VITE_SUPABASE_URL=https://hxsifqmspboitoqnkvwj.supabase.co`
-   - `VITE_SUPABASE_ANON_KEY=your_supabase_anon_key`
-   - `VITE_APP_URL=https://your-rider-domain.com`
-4. Deploy! SPA routing rewrites should point all requests to `index.html`.
+## Environment Variables
+Copy `.env.example` to `.env.local`:
+```env
+EXPO_PUBLIC_SUPABASE_URL=https://your-supabase-project.supabase.co
+EXPO_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOi...
+EXPO_PUBLIC_API_BASE_URL=http://localhost:4000/api
+```
+
+## Build & Release
+```bash
+# TypeScript verification (0 errors required)
+npm run typecheck
+
+# Web / PWA export
+npm run build:web
+
+# Standalone Android APK (EAS Build)
+eas build -p android --profile preview
+```

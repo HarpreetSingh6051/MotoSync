@@ -1,11 +1,11 @@
-/* Ride & Roam (PackPulse) — offline shell service worker.
- * Registered in production only (see src/main.tsx).
+/* MotoSync — offline shell service worker.
+ * Registered in production only.
  * Strategy:
  *   - navigations: network first, fall back to the cached app shell
  *   - static assets: stale-while-revalidate
- *   - Supabase / Gemini / font requests: pass straight through
+ *   - Supabase / API requests: pass straight through
  */
-const CACHE = 'kixup-v1'
+const CACHE = 'motosync-v1'
 const SHELL = ['/', '/index.html', '/manifest.webmanifest', '/icon.svg']
 
 const precache = async () => {
