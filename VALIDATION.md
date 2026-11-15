@@ -29,3 +29,9 @@ Authentication HTTP calls also use this backend URL. No hard-coded production fa
 - Backend `scripts/test-rider-live.mjs --allow-fixtures` verifies the shared live API/database flows with private fixtures.
 
 Physical-device/emulator navigation, touch/keyboard handling and screenshots at 360/390/430 widths still need UI acceptance. Successful bundle exports do not substitute for these checks. Existing-account login works; signup/recovery and push notification delivery are not included in this phase.
+
+## Dependency repair
+
+Expo packages, SVG, gesture handler and native storage were aligned with SDK 58's compatibility manifest. Lucide was updated to a release supporting React 19. The native SVG build failure is resolved. Font imports target only the seven used faces.
+
+The scoped `@expo/fingerprint` override uses patched minimatch 11.0.1 or newer for [GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249). Its ignored-path matcher was smoke-tested; npm audit reports zero vulnerabilities after installation. Recheck the override when Expo updates its own minimatch dependency.
