@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import type { ChatChannel, ChatMessage, Club, Expense, Ride } from '@/types'
-import { supabase } from '@/lib/supabase'
+import { demoMode } from '@/lib/environment'
 import {
   channels as mockChannels,
   clubs as mockClubs,
@@ -88,113 +88,13 @@ export const mapClubRow = (row: DbRow): Club => ({
   founded: '2024',
 })
 
-const API_BASE = (
-  (typeof process !== 'undefined' && (process.env.EXPO_PUBLIC_API_BASE_URL || process.env.VITE_API_BASE_URL)) ||
-  'https://moto-sync-be.vercel.app/api/v1'
-).replace(/\/$/, '')
-
-/* ------------------------------------------------------------------ *
- * Fetchers — each falls back to the seeded dataset on any failure.
- * ------------------------------------------------------------------ */
-
-const fetchRides = async (): Promise<Ride[]> => {
-  try {
-    const res = await fetch(`${API_BASE}/rides`)
-    if (res.ok) {
-      const data = await res.json()
-      if (Array.isArray(data) && data.length > 0) {
-        return (data as DbRow[]).map(mapRideRow)
-      }
-    }
-  } catch {
-    /* fallback to Supabase */
-  }
-
-  if (supabase) {
-    try {
-      const { data, error } = await supabase
-        .from('rides')
-        .select(
-          '*, participants:ride_participants(user_id, formation_role, rsvp_status)',
-        )
-        .order('start_time', { ascending: false })
-      if (!error && data?.length) return (data as DbRow[]).map(mapRideRow)
-    } catch {
-      /* offline / misconfigured backend → seeded fallback */
-    }
-  }
-  await sleep(220)
-  return mockRides
-}
-
-const fetchClubs = async (): Promise<Club[]> => {
-  try {
-    const res = await fetch(`${API_BASE}/clubs`)
-    if (res.ok) {
-      const data = await res.json()
-      if (Array.isArray(data) && data.length > 0) {
-        return (data as DbRow[]).map(mapClubRow)
-      }
-    }
-  } catch {
-    /* fallback to Supabase */
-  }
-
-  if (supabase) {
-    try {
-      const { data, error } = await supabase
-        .from('clubs')
-        .select('*')
-        .order('name', { ascending: true })
-      if (!error && data?.length) return (data as DbRow[]).map(mapClubRow)
-    } catch {
-      /* fall through */
-    }
-  }
-  await sleep(180)
-  return mockClubs
-}
-
-const fetchExpenses = async (): Promise<Expense[]> => {
-  if (supabase) {
-    try {
-      const { data, error } = await supabase
-        .from('ride_expenses')
-        .select('*')
-        .order('created_at', { ascending: false })
-      if (!error && data?.length) {
-        return (data as DbRow[]).map((row) => ({
-          id: str(row.id),
-          rideId: str(row.ride_id),
-          paidByUserId: str(row.paid_by_user_id),
-          title: str(row.title, 'Ride expense'),
-          amount: num(row.amount),
-          currency: row.currency === 'USD' ? 'USD' : 'INR',
-          perRiderShare: num(row.per_rider_share),
-          splitCount: num(row.split_count, 1),
-          lineItems: Array.isArray(row.line_items)
-            ? (row.line_items as Expense['lineItems'])
-            : [],
-          createdAt: str(row.created_at, new Date().toISOString()),
-        }))
-      }
-    } catch {
-      /* fall through */
-    }
-  }
-  await sleep(160)
-  return mockExpenses
-}
-
-const fetchChannels = async (): Promise<ChatChannel[]> => {
-  await sleep(120)
-  return mockChannels
-}
-
-const fetchMessages = async (): Promise<ChatMessage[]> => {
-  await sleep(120)
-  return mockMessages
-}
+// Only opt-in prototype screens use these fixtures. Live screens use riderApi.
+const fixture = async <T,>(data:T):Promise<T> => { if(!demoMode) throw new Error('Demo data is disabled'); return data }
+const fetchRides=()=>fixture(mockRides)
+const fetchClubs=()=>fixture(mockClubs)
+const fetchExpenses=()=>fixture(mockExpenses)
+const fetchChannels=()=>fixture(mockChannels)
+const fetchMessages=()=>fixture(mockMessages)
 
 export const useRides = () => {
   const localRides = useAppStore((state) => state.localRides)

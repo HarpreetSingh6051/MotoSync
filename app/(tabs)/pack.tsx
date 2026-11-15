@@ -1,3 +1,5 @@
+import { LiveRiderScreen } from '@/components/LiveRiderScreen'
+import { demoMode } from '@/lib/environment'
 import React, { useState } from 'react'
 import {
   StyleSheet,
@@ -106,6 +108,9 @@ const MOCK_RIDERS: PackRider[] = [
 ]
 
 export default function PackScreen() {
+  return demoMode ? <View style={{flex:1,backgroundColor:Colors.background}}><Text style={{color:Colors.blue,padding:Spacing.md}}>DEMO ? sample data and simulated actions</Text><DemoScreen /></View> : <LiveRiderScreen screen="pack" />
+}
+function DemoScreen() {
   const { width } = useWindowDimensions()
   const params = useLocalSearchParams<{ rider?: string }>()
   const pushToast = useAppStore((state) => state.pushToast)

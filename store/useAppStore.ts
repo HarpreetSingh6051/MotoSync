@@ -1,5 +1,6 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import type {
   ChatMessage,
   Club,
@@ -229,6 +230,7 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: 'kixup.state.v1',
+      storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({
         isPro: state.isPro,
         planId: state.planId,

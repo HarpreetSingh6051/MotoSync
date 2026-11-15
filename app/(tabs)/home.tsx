@@ -1,3 +1,5 @@
+import { LiveRiderScreen } from '@/components/LiveRiderScreen'
+import { demoMode } from '@/lib/environment'
 import React, { useState } from 'react'
 import {
   StyleSheet,
@@ -54,6 +56,9 @@ import { triggerHaptic } from '@/lib/haptics'
 import type { ReelClip } from '@/types'
 
 export default function HomeScreen() {
+  return demoMode ? <View style={{flex:1,backgroundColor:Colors.background}}><Text style={{color:Colors.blue,padding:Spacing.md}}>DEMO ? sample data and simulated actions</Text><DemoScreen /></View> : <LiveRiderScreen screen="home" />
+}
+function DemoScreen() {
   const router = useRouter()
   const params = useLocalSearchParams<{ sheet?: string }>()
   const { width } = useWindowDimensions()

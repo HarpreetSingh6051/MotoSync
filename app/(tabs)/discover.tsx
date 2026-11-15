@@ -1,3 +1,5 @@
+import { LiveRiderScreen } from '@/components/LiveRiderScreen'
+import { demoMode } from '@/lib/environment'
 import React, { useState, useEffect } from 'react'
 import {
   StyleSheet,
@@ -46,6 +48,9 @@ import { uid } from '@/lib/format'
 const REGION_FILTERS = ['All', 'Punjab', 'Chandigarh', 'Bengaluru', 'Jaipur']
 
 export default function DiscoverScreen() {
+  return demoMode ? <View style={{flex:1,backgroundColor:Colors.background}}><Text style={{color:Colors.blue,padding:Spacing.md}}>DEMO ? sample data and simulated actions</Text><DemoScreen /></View> : <LiveRiderScreen screen="discover" />
+}
+function DemoScreen() {
   const { data: clubs } = useClubs()
   const { data: messages } = useChatMessages()
   const params = useLocalSearchParams<{ sheet?: string }>()

@@ -44,8 +44,8 @@ const SoundContext = createContext<SoundContextValue>({
 export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname()
   const params = useLocalSearchParams<{ sound?: string }>()
-  const [isEnabled, setIsEnabled] = useState(params.sound === 'on')
-  const [isPlaying, setIsPlaying] = useState(params.sound === 'on')
+  const [isEnabled, setIsEnabled] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
 
   const playerRef = useRef<AudioPlayer | null>(null)
   const fadeIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -226,25 +226,11 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [isPlaying, isEnabled, pauseSound, playSound])
 
-  // Global user interaction handler to resume if enabled from previous session
-  useEffect(() => {
-    if (Platform.OS === 'web' && typeof window !== 'undefined') {
-      const handleFirstInteraction = () => {
-        if (!userHasInteracted.current) {
-          userHasInteracted.current = true
-          if (isEnabled && !isPlaying && !pathname?.includes('/splash') && !pathname?.includes('/onboarding')) {
-            playSound()
-          }
-        }
-      }
-      window.addEventListener('click', handleFirstInteraction, { once: true })
-      window.addEventListener('touchstart', handleFirstInteraction, { once: true })
-      return () => {
-        window.removeEventListener('click', handleFirstInteraction)
-        window.removeEventListener('touchstart', handleFirstInteraction)
-      }
-    }
-  }, [isEnabled, isPlaying, pathname, playSound])
+  // Playback requires the explicit sound control, never a generic screen tap.
+  useEffect(() => () => {
+    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current)
+    playerRef.current?.remove()
+  }, [])
 
   return (
     <SoundContext.Provider
