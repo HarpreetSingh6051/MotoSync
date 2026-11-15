@@ -6,6 +6,23 @@ const url = (process.env.EXPO_PUBLIC_SUPABASE_URL || "").trim();
 
 const anonKey = (process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || "").trim();
 
+const isServer = typeof window === "undefined";
+
+const ssrSafeStorage = {
+  getItem: async (key: string): Promise<string | null> => {
+    if (isServer) return null;
+    return AsyncStorage.getItem(key);
+  },
+  setItem: async (key: string, value: string): Promise<void> => {
+    if (isServer) return;
+    return AsyncStorage.setItem(key, value);
+  },
+  removeItem: async (key: string): Promise<void> => {
+    if (isServer) return;
+    return AsyncStorage.removeItem(key);
+  },
+};
+
 /**
  * Universal Demo & Live data handling
  */
@@ -32,7 +49,7 @@ export const supabase: SupabaseClient | null = isSupabaseConfigured
         },
       },
       auth: {
-        storage: AsyncStorage,
+        storage: ssrSafeStorage,
         persistSession: true,
         autoRefreshToken: true,
         detectSessionInUrl: false,
